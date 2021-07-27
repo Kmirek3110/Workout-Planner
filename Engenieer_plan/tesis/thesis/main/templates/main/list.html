@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% block title %} View List {% endblock %}
+{% block content %}
+    <h1>{{ls.name}}</h1>
+    <form method="post" action="#">
+        {% csrf_token %}
+        <ul>
+        {% for exercise in ls.exercise_set.all %}
+            <li>{{exercise.name}}<br></br>
+                {{exercise.description}}
+            </li>
+        {% endfor %}
+        </ul>
+    <h2> Add new Exercise </h2>
+    <button type="submit", name="save", value="save">Save</button>
+    <br></br>
+    <ul>
+        <li><input type="text", name="name"> <label for="name">Exercise</label> </li>
+        <li><input type="text", name="description">  <label for="description">Description</label></li>
+        <li><input type="int", name="reps">  <label for="reps">How many reps per set?</label></li>
+        <li><input type="int", name="sets">  <label for="sets">How many sets?</label></li>
+    </ul>
+    
+    <button type="submit", name="newExercise", value="newExercise">Add Exercise</button>
+    <br></br>
+    </form>
+{% endblock %}

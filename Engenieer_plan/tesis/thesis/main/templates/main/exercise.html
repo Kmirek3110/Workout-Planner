@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+<h1> Add new Exercise </h1>
+{% endblock %}
+{% block content %}
+Create exercise
+<form method="post" action="/add_exercise">
+    {% csrf_token %}
+    {{form.as_ul}}
+    <button type="submit", name="save"> Create New </button>
+</form>
+{% endblock %}
