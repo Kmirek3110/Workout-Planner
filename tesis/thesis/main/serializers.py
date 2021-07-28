@@ -1,8 +1,9 @@
+from enum import unique
 from rest_framework import serializers
 from .models import Workout, Exercise, ActiveExercise
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
-
+from rest_framework.fields import CurrentUserDefault
 class ExerciseSerializers(serializers.ModelSerializer):
     class Meta:
         model = Exercise
@@ -18,6 +19,7 @@ class ActiveExerciseSerializers(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ActiveExercise
         fields = ["exercise_name","description","difficulty","reps","sets"]
+        
 
 
 class WorkoutSerializers(serializers.ModelSerializer):  
@@ -28,8 +30,11 @@ class WorkoutSerializers(serializers.ModelSerializer):
 
 
     def update(self, instance, validated_data):
+        instance.user = validated_data.get("user",instance.user)
         instance.title = validated_data.get("title",instance.title)
         instance.save()
+        return instance
+
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -1,12 +1,13 @@
 from django.db.models import fields
 from django.shortcuts import render
-from rest_framework.serializers import Serializer
 from .models import ActiveExercise, Exercise, Workout
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
-from rest_framework import viewsets
 from .serializers import WorkoutSerializers, ExerciseSerializers, ActiveExerciseSerializers, UserSerializer
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 # Create your views here.
 
 
@@ -60,9 +61,20 @@ def exerciseDelete(request, pk):
 
 
 @api_view(["GET"])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 def workoutList(request):
-    workouts = Workout.objects.all()
-    serializer = WorkoutSerializers(workouts, many=True)
+    default_workouts = Workout.objects.filter(user__isnull=True)
+  
+    if str(request.headers["Authorization"]) != "Token undefined":
+        token = str(request.headers["Authorization"]).split()[1]
+        token = Token.objects.get(key=token)
+        user_workouts = Workout.objects.filter(user__in=[token.user_id])
+        return_workouts = user_workouts.union(default_workouts)
+        serializer = WorkoutSerializers(return_workouts, many=True)
+    else:
+        serializer = WorkoutSerializers(default_workouts, many=True)
+
     return Response(serializer.data)
 
 
@@ -74,21 +86,26 @@ def workoutDetail(request, pk):
 
 
 @api_view(['POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
 def workoutCreate(request):
+    # print(request.user)
+    token = str(request.headers["Authorization"]).split()[1]
+    token = Token.objects.get(key=token)
+    user = User.objects.get(id=token.user_id)  
+    
     serializer = WorkoutSerializers(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        user.workout.add(serializer.instance)
 
     return Response(serializer.data)
 
 
 @api_view(['POST', 'PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
 def workoutUpdate(request, pk):
     workout = Workout.objects.get(id=pk)
-    print(workout)
-    print(request.data)
     serializer = WorkoutSerializers(instance=workout, data=request.data)
-    print(serializer)
 
     if serializer.is_valid():
         serializer.save()
@@ -101,6 +118,8 @@ def workoutUpdate(request, pk):
 
 
 @api_view(['DELETE'])
+# @permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
 def workoutDelete(request, pk):
     workout = Workout.objects.get(id=pk)
     workout.delete()
@@ -109,7 +128,7 @@ def workoutDelete(request, pk):
 
 @api_view(['POST'])
 def workoutAddExercise(request, pk):
-    
+    print(request)
     workout = Workout.objects.get(id=pk)
     exercise = Exercise.objects.get(exercise_name=request.data['exercise_name'])
     serializer = ActiveExerciseSerializers(data = request.data)
@@ -117,6 +136,35 @@ def workoutAddExercise(request, pk):
     if serializer.is_valid():
         serializer.save(workout=workout, exercise=exercise)
     return Response("what")
+
+@api_view(['DELETE'])
+def workoutDelExercise(request, pk):
+
+    workout = Workout.objects.get(id=pk)
+    exercise = Exercise.objects.get(exercise_name=request.data["exercise_name"])
+    ActiveExercise.objects.filter(workout=workout,exercise=exercise).first().delete()
+
+    return Response('Item succsesfully delete!')
+
+@api_view(['PUT'])
+def workoutUpdExercise(request, pk):
+    print(request.data)
+    workout = Workout.objects.get(id=pk)
+    exercise = Exercise.objects.get(exercise_name=request.data['exercise_name'])
+    selected_exercise = ActiveExercise.objects.filter(workout=workout,exercise=exercise).first()
+    serializer = ActiveExerciseSerializers(instance=selected_exercise, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response("what")
+        
+
+    # exercise = Exercise.objects.get(exercise_name=request.data['exercise_name'])
+    # serializer = ActiveExerciseSerializers(data = request.data)
+
+    # if serializer.is_valid():
+    #     serializer.save(workout=workout, exercise=exercise)
+    # return Response("what")
 
 
 @api_view(['GET'])
