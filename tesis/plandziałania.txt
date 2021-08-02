@@ -1,7 +1,0 @@
-Stworzyć modele, (exercise, workout, body)
-Wizualizacja ładna wszystkiego,
-Autoryzacja logowanie itp itd
-Kilka defaultowych planów treningowych, latwy, sredni, trudny
-Jedna osoba może mieć max 7(workoutów)
-Wprowadzamy ile czasu jesteśmy wstanie pościwięcic i nasze cele, (schudnięcie, masa, cardio)
-Będzie pokazywane jak długo juz jestesmy na naszym planie po 7/8 tygodniach nowe tworzone
