@@ -1,18 +1,21 @@
 from re import T
 import re
+import csv
 from typing import OrderedDict
 from django.db.models import fields
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from rest_framework import serializers
-from .models import ActiveExercise, Exercise, Plan, Workout
+from .models import ActiveExercise, Exercise, FinishedPlanInstance, FinishedPlanInstance, Plan, Workout
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
-from .serializers import PlanSerializer, WorkoutSerializers, ExerciseSerializers, ActiveExerciseSerializers, UserSerializer
+from .serializers import PlanSerializer, WorkoutSerializers, ExerciseSerializers,ActiveExerciseSerializers, UserSerializer, FinishedSerializer
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
+from .utils import generate_plan, listexercises
+# from utility import listexercises
 # Create your views here.
 
 
@@ -31,10 +34,14 @@ def apiOverview(request):
         "Delete Workout": '/workout-delete/<str:pk>/',
         "Workout add Exercise":'/workout-add-exercise/<str:pk>',
         "Training Plans list":"/plans-list",
-        "Training Plan Detail":"/plan-view/<str:pk>"
+        "Training Plan Detail":"/plan-view/<str:pk>",
+        "Finished Plan instance list":"/finished-list",
+        "Mark Plan as done":"/finished-plan/<str:pk>",
+        "Undo Plan":"/undo-finished-plan/<str:pk>",
     }
 
     return Response(api_urls)
+
 
 def token_autorization(data):
     # print(data)
@@ -48,6 +55,14 @@ def token_autorization(data):
 
 @api_view(["GET"])
 def exerciseList(request):
+    # list = listexercises()
+    # for row in list:
+    #         _, created = Exercise.objects.get_or_create(
+    #             exercise_name=row[0],
+    #             description=row[2],
+    #             type=row[1],
+    #             difficulty=row[3],
+    #             )
     exercises = Exercise.objects.all()
     serializer = ExerciseSerializers(exercises, many=True)
     return Response(serializer.data)
@@ -80,6 +95,7 @@ def exerciseDelete(request, pk):
 @authentication_classes([SessionAuthentication, BasicAuthentication])
 # @permission_classes([IsAuthenticated])
 def workoutList(request):
+    
     token = token_autorization(request.headers)
     user_plans = Plan.objects.filter(user = token.user_id)
     workouts = Workout.objects.none()
@@ -157,7 +173,7 @@ def workoutDelExercise(request, pk):
 
 @api_view(['PUT'])
 def workoutUpdExercise(request, pk):
-    # print(request.data)
+    print(request.data)
     workout = Workout.objects.get(id=pk)
     exercise = Exercise.objects.get(exercise_name=request.data['exercise_name'])
     selected_exercise = ActiveExercise.objects.filter(workout=workout,exercise=exercise).first()
@@ -208,25 +224,27 @@ def trainingPlanList(request):
 
 @api_view(["POST"])
 def planCreate(request):
+ 
     token = token_autorization(request.headers)
-    # print(token.user_id)
+    # print(token)
     if token is not None:
         user = User.objects.get(id=token.user_id)
         serializer = PlanSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             user.plan.add(serializer.instance) 
+            print("gitara")
             return Response(serializer.data)
         else:
+            print("??///")
             return Response(serializer.errors)
             print(serializer.error_messages)
-
+    
     return Response("Failed")
 
 @api_view(["DELETE"])
 def planDelete(request, pk):
     token = token_autorization(request.headers)
-    # print(token.user_id)
     if token is not None:
         user = User.objects.get(id=token.user_id)
         plan = Plan.objects.get(id=pk)
@@ -238,14 +256,11 @@ def planDelete(request, pk):
 @api_view(['POST'])
 def planAddWorkout(request, pk):
     plan = Plan.objects.get(id=pk)
-    try:
-        workout = Workout.objects.get(title=request.data['title'])
-        plan.workouts.add(workout)
-    except Workout.DoesNotExist:
-        serializer = WorkoutSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            plan.workouts.add(serializer.instance)
+   
+    serializer = WorkoutSerializers(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        plan.workouts.add(serializer.instance)
 
     return Response("what")
 
@@ -271,4 +286,63 @@ def trainingPlanDetail(request, pk):
         return Response("Failed")
 
     return Response(serializer.data)
+
+@api_view(['GET'])
+def finishedPlanList(request):
+    token = token_autorization(request.headers)
+    if token is not None:
+        plans = Plan.objects.filter(user = token.user_id)
+        finishedplans = FinishedPlanInstance.objects.filter(plan__in = plans)
+        serializer = FinishedSerializer(finishedplans, many=True)
+        # print(serializer.data)
+        return Response(serializer.data)
+    return Response("failed")
+
+@api_view(['POST'])
+def planDone(request, pk):
+    token = token_autorization(request.headers)
+    print(request.data)
+    if token is not None:
+        plan = Plan.objects.get(id=pk)
+        serializer = FinishedSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save(plan=plan)
+        else:
+            print(serializer.errors)
+
+    return Response("Gitara")
+
+@api_view(['POST',"GET"])
+def planGenerate(request):
+    token = token_autorization(request.headers)
+    # print(request.data)
+    if token is not None:
+        
+        time = request.data["time"]
+        target = request.data["target"]
+        num = request.data["number"]
+        exercises = request.data["exercises"]
+
+        plan_name = "Generated-"+target
+        plan, reps, sets = generate_plan(num, target, mandatory_exercises = exercises, time_per_workout = int(time))
+        print(reps,sets)
+
+        user = User.objects.get(id=token.user_id)
+        p = Plan(plan_name=plan_name, target=target)
+        p.save()
+        for i, wrk in enumerate(plan):
+            workout = Workout.objects.create(title = "Workout "+str(i+1))
+            for exr in set(wrk.exercises):
+                exr = Exercise.objects.get(exercise_name=exr)
+                ActiveExercise.objects.create(reps=reps,
+                 sets=sets, exercise = exr, workout=workout)
+            p.workouts.add(workout)
+        user.plan.add(p) 
+
+    serializer = PlanSerializer(p,many=False)
+    print(serializer.data)
+    return Response(serializer.data)
+
+
 

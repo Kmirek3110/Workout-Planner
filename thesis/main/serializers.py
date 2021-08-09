@@ -1,6 +1,6 @@
 from enum import unique
 from rest_framework import serializers
-from .models import Workout, Exercise, ActiveExercise, Plan
+from .models import Workout, Exercise, ActiveExercise, Plan, FinishedPlanInstance
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
 from rest_framework.fields import CurrentUserDefault
@@ -17,17 +17,17 @@ class ActiveExerciseSerializers(serializers.HyperlinkedModelSerializer):
     exercise_name = serializers.ReadOnlyField(source='exercise.exercise_name')
     description = serializers.ReadOnlyField(source='exercise.description')
     difficulty = serializers.ReadOnlyField(source="exercise.difficulty")
+    type = serializers.ReadOnlyField(source="exercise.type")
     class Meta:
         model = ActiveExercise
-        fields = ["exercise_name","description","difficulty","reps","sets"]
-        
+        fields = ["exercise_name","description","difficulty","reps","sets","type"]       
 
 
 class WorkoutSerializers(serializers.ModelSerializer):  
     exercises = ActiveExerciseSerializers(source="activeexercise_set",many=True,required = False)
     class Meta:
         model = Workout
-        fields = ["id","title","creation_date","exercises"]
+        fields = ["id","title", "exercises"]
 
 
     def update(self, instance, validated_data):
@@ -41,6 +41,13 @@ class PlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plan
         fields = ["id","plan_name","target","workouts"]
+
+
+class FinishedSerializer(serializers.ModelSerializer):
+    plan = PlanSerializer(many=False, required = False)
+    class Meta:
+        model = FinishedPlanInstance    
+        fields = "__all__"
 
 
 class UserSerializer(serializers.ModelSerializer):

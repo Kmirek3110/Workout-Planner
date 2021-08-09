@@ -22,5 +22,9 @@ urlpatterns = [
     path("plan-delete/<str:pk>",views.planDelete, name ="planDelete"),
     path("plan-add-workout/<str:pk>",views.planAddWorkout, name="planaddworkout"),
     path("plan-delete-workout/<str:pk>",views.planDelWorkout, name="plandeleteworkout"),
-    path("plan-detail/<str:pk>", views.trainingPlanDetail, name="planDetail")
+    path("plan-detail/<str:pk>", views.trainingPlanDetail, name="planDetail"),
+    path("finished-list",views.finishedPlanList, name="finishedlist"),
+    path("finished-plan/<str:pk>",views.planDone, name="finishedadd"),
+    path("generate-plan",views.planGenerate, name="plangenerate")
+    # path("undo-finished-workout/<str:pk>",views.WorkoutUndo, name="finisheddel"),
 ]
