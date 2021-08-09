@@ -1,0 +1,19 @@
+/* .Sidebar{
+  
+    width:200px;
+    height: 100vh;
+    background-color: aqua;
+    top: 0;
+  } */
+
+  .Sidebar{
+  
+    position: absolute;
+    top: 60px;
+    right: -50px;
+    /* height: 100wh; */
+    height: 100vh;
+    width: 300px;
+    transition: left .3s ease-in-out;
+    background-color: white;
+    }

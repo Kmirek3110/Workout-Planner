@@ -1,0 +1,15 @@
+  <div className = "col-md-2">
+                                <button className = "btn btn-dark" onClick  = {() => WrkDoneForm(workout)}> Workout Done</button>
+                            </div>
+
+                              {showDoneForm && (workout.title == chosenWorkout) &&
+                            <FinishedForm workout={workout} target={props.target}/>
+                        }
+
+
+                         const WrkDoneForm = (workout) => {
+        setShowDoneForm(!showDoneForm);
+        setchosenWorkout(workout.title)
+    }
+
+       const [showDoneForm, setShowDoneForm] = useState(false)
