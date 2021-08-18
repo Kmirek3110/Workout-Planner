@@ -1,2 +1,0 @@
-python manage.py migrate --run-syncdb
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
