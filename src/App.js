@@ -13,18 +13,22 @@ import { Layout } from './components/Layout'
 import {NavigationBar } from './components/Navbar'
 import FinishedList from './components/FinishedList';
 import GenerateForm from './components/GenerateForm';
+// import dotenv from 'dotenv';
 // import {ScrollRestoration,RestoredScroll} from 'react-scroll-restoration'
 
+/*
+  Komponent główny scale wszystko w jedność.
+  Dodaje funkcjonalność Routera.
 
+*/
 
 function App() {
-
   const [exercises, setExercises] = useState([])
   const [token] = useCookies(['mytoken'])
 
-
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/exercise-list', {
+    fetch('https://training-plan-generator.herokuapp.com/api/exercises'
+    , {
       'method':'GET',
       headers: {
         'Content-Type':'application/json',
@@ -35,7 +39,6 @@ function App() {
     .then(resp => setExercises(resp))
 
   }, [token])
-  
 
   return (
 
@@ -51,17 +54,7 @@ function App() {
             <Login/>
           </Route>
         </Switch>
-       
-
-     
-        {/* <Switch>
-           <Route exact path = "/home">
-              <div className = "col">
-                <h3>Homepage  </h3>
-             </div>    
-              </Route>
-          </Switch> */}
-
+      
           <Switch>
            <Route exact path = "/plans" >
               <div className = "col">

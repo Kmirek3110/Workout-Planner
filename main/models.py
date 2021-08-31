@@ -14,7 +14,7 @@ class Exercise(models.Model):
     """
     # workout = models.ForeignKey(Workout, on_delete=models.CASCADE, null=True)
     exercise_name = models.CharField(max_length=200)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=600)
     
     TYPES = [
         ("L","Legs"),
@@ -54,7 +54,7 @@ class Exercise(models.Model):
 
 class Workout(models.Model):
     """
-    Klasa odpowiadająca za zbiór ćwiczeń które mamy wykonań
+    Klasa odpowiadająca za zbiór ćwiczeń które mamy wykonać
     na jednym treningu.
     """
     title = models.CharField(max_length=200)
@@ -66,7 +66,7 @@ class Workout(models.Model):
 
 class ActiveExercise(models.Model):
     """
-    Klasa typu through dodaje ćwiczenia do jednostki treningowej wraz z dodatkowymu
+    Klasa typu through dodaje ćwiczenia do jednostki treningowej wraz z dodatkowymi
     atrybutami takimi jak ilość powtórzeń oraz serii.
     """
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, null=True)

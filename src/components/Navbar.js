@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Styles = styled.div`
   .navbar {
-    background-color: #222;
+    background-color: #F0F8FF;
   }
   a, .navbar-brand, .navbar-nav .nav-link {
     color: #bbb;
@@ -15,6 +15,9 @@ const Styles = styled.div`
   }
 `;
 
+/*
+  Pasek nawigacyjny
+*/
 export const NavigationBar = () => (
   <Styles>
     <Navbar expand="lg">
@@ -22,11 +25,11 @@ export const NavigationBar = () => (
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          {/* <Nav.Item>
+          <Nav.Item>
             <Nav.Link as={Link} to="">
               Home
             </Nav.Link>
-          </Nav.Item> */}
+          </Nav.Item>
           <Nav.Item>
             <Nav.Link as={Link} to="/plans" >
               Training Plans

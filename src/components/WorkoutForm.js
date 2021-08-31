@@ -3,7 +3,9 @@ import {useState} from 'react'
 import APIService from '../APIService'
 import {useCookies} from 'react-cookie';
 
-
+/*
+    Obsługa tworzenia nowej jednostki treningowej.
+*/
 function WorkoutForm(props) {
 
 

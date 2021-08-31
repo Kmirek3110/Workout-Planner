@@ -5,6 +5,10 @@ import {useCookies} from 'react-cookie';
 import {useState} from 'react'
 import {useHistory} from 'react-router-dom';
 
+
+/*
+Formularz do generowania planów treningowych.
+*/
 function GenerateForm(props) {
 
     const [planinfo] = useState({number:"", target:"", time:"", exercises:[]})
@@ -15,15 +19,10 @@ function GenerateForm(props) {
     let all_names = props.exercises && props.exercises.map(function(item){
         return {exercise_name:item.exercise_name};
     })
-
-    const isValid = (plan) => {
-        return true
-    }
-    
     
     const handleSumbit = (e) => {
         e.preventDefault()
-        if (isValid(planinfo))
+        if (error === false)
             APIService.GeneratePlan(planinfo, token['mytoken'])
             .then(resp => history.push(`/plan/${resp.id}`))
     }
@@ -72,7 +71,7 @@ function GenerateForm(props) {
                         }
                     {e.target.value === "" ? setError(false) : <div/>}
                     }}/>
-            {error > 0 && <div><br/> <span className='error'>Must be a numeric value between 0 and 120</span></div>}
+            {error > 0 && <div><br/> <span className='error'>Must be a numeric value between 0 and 90</span></div>}
             <br/>
             
             <label className = "form-label">Mandatory exercises</label>
@@ -85,7 +84,7 @@ function GenerateForm(props) {
                 onChange= {(e) => {
                     planinfo["exercises"] = e}}
             />
-             <input type="submit" value="Wyślij" />
+             <input type="submit" value="Submit" />
              {error && <h3>Invalid form</h3>}
         </form>
     )

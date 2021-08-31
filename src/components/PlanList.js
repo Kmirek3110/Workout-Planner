@@ -6,6 +6,11 @@ import PlanForm from './PlanForm';
 import APIService from '../APIService';
 import FinishedForm from './FinishedForm';
 
+
+/*
+  Wszystkie aktualne plany treningowe 
+  danego użytkownika.
+*/
 function PlanList() {
 
     let history = useHistory()
@@ -21,9 +26,8 @@ function PlanList() {
         setChosenPlan(plan.id)
     }
 
-    
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/plans-list', {
+        fetch(`https://training-plan-generator.herokuapp.com/api/plans-list`, {
       'method':'GET',
       headers: {
         'Content-Type':'application/json',
@@ -76,7 +80,7 @@ function PlanList() {
             <div className="row">
         {plans && plans.map(plan => {           
             return(
-                <div>
+                <div key={plan.id}>
                 
                 <button type="button" className="PlanElement" onClick={() => history.push(`/plan/${plan.id}`)}>{plan.plan_name}
                     </ button>

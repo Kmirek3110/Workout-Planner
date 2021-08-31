@@ -5,6 +5,9 @@ import APIService from '../APIService';
 import {useCookies} from 'react-cookie';
 import {useHistory} from 'react-router-dom';
 
+/*
+    Autoryzacja użytkowników.
+*/
 function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')

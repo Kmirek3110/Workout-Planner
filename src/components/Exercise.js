@@ -9,6 +9,12 @@ import Shoulder from './pictures/Shoulder.jpg'
 import Biceps from './pictures/Biceps.jpg'
 import Triceps from './pictures/Triceps.jpg'
 
+
+
+   /*
+   Komponent odpowiedzialny za pogrupowanie
+   ćwiczeń według głównych mięśni. 
+  */
 function Exercise(props) {
     var muscle = {
       "L": "Legs",
@@ -28,13 +34,13 @@ function Exercise(props) {
       "Bi":Biceps,
       "A":Abs
     };
-
+ 
     return (
         <div className ="muslcegroup">
             <h3>{muscle[props.group[0]]}</h3>
             {props.group && props.group[1].map(exercise => {
               return(
-                <div>
+                <div key={exercise.exercise_name}>
                 <div className="exercise">{exercise.exercise_name}</div>
                 <div className="hide">{exercise.description}</div>
                 </div>

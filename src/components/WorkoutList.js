@@ -4,7 +4,10 @@ import ExerciseForm from './ExerciseForm';
 import {useCookies} from 'react-cookie';
 
 
-
+/*
+    Komponent w którym listujemy wszystkie ćwiczenia
+    należące do danej jednostki treningowej.
+*/
 function WorkoutList(props) {
     
     const [exercise, SetExercise] = useState({exercise_name:"", reps:"", sets:""})

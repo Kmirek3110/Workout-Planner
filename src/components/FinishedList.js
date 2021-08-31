@@ -2,13 +2,17 @@ import React, {useState, useEffect} from 'react'
 import {useCookies} from 'react-cookie';
 import {Line} from 'react-chartjs-2'
 
+
+   /* 
+   Komponent służący do generowania wykresów z aktualnych postępów.
+  */
 function FinishedList() {
 
     const [finished, setFinished] = useState([])
     const [token] = useCookies(['mytoken'])
-
+    var PORT = process.env.PORT
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/finished-list', {
+        fetch(`https://training-plan-generator.herokuapp.com/api/finished-list`, {
           'method':'GET',
           headers: {
             'Content-Type':'application/json',
@@ -21,46 +25,29 @@ function FinishedList() {
       }, [token])
 
 
-    console.log(finished)
-    let value = finished.map(function(item){
-      return item.progress;
-    })
-    // const data = {
-    //   labels: ['01', '02', '03', '04', '05', '06'],
-    //   datasets: [{
-    //       label: 'X',
-    //       data: value,
-    //       backgroundColor: [
-    //           'rgba(255, 99, 132, 0.2)'
-
-    //       ],
-    //       borderColor: [
-    //           'rgba(255, 99, 132, 1)'
-
-    //       ],
-    //       borderWidth: 1
-    //   }]
-    // }
     var finishedplans = new Object();
     
     
-    {finished && finished.forEach(function(element){
-      if ([element.plan.plan_name, element.plan.target] in finishedplans){   
-        finishedplans[[element.plan.plan_name, element.plan.target]].push(element.progress)
+    if(finished.length > 0 && finished != "failed"){
+      {finished.forEach(function(element){
+        if ([element.plan.plan_name, element.plan.target] in finishedplans){   
+          finishedplans[[element.plan.plan_name, element.plan.target]].push(element.progress)
+          }
+        else{        
+          finishedplans[[element.plan.plan_name, element.plan.target]] = [element.progress]
         }
-      else{        
-        finishedplans[[element.plan.plan_name, element.plan.target]] = []
+        })
       }
-      })
-    }
+  }
     
     var target_desc = {
       "WL":"Weight loss chart in kg",
-      "EN":"Time to run 2km in seconds",
+      "EN":"Number of push-ups",
       "STR":"Powerlifiting total chart",
     }
     
     return (
+      <div>
         <div>
           {finished &&  Object.entries(finishedplans).map(progress => {
             return (
@@ -85,6 +72,7 @@ function FinishedList() {
               </div>
             )})
           }
+        </div>
         </div>
     )
 }

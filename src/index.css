@@ -1,14 +1,13 @@
-.horizontal_line{
+.horizontal_line {
   border-bottom: 4px solid black;
   width: 100%;
   position: relative;
   top: -20%;
   padding-bottom: 5mm;
-} 
+}
 
 @media screen and (min-width: 450px) {
-
-  .WorkoutCreation{
+  .WorkoutCreation {
     position: absolute; /* or absolute */
     top: 30%;
     left: 45%;
@@ -23,7 +22,7 @@
     border-image: linear-gradient(45deg, turquoise, greenyellow) 1;
   }
 
-  .WorkoutElement{
+  .WorkoutElement {
     font-family: monospace;
     border-top-left-radius: 37px 140px;
     border-top-right-radius: 23px 130px;
@@ -43,14 +42,13 @@
     transition: all 0.13s ease-in; */
   }
 
-
   div.WorkoutElement > h3 {
     position: relative;
     margin: auto;
     left: 35%;
     font-size: 70px;
   }
-  .exr-desc{
+  .exr-desc {
     position: relative;
     /* height: 100px; */
     width: 90%;
@@ -60,12 +58,11 @@
     margin: auto;
     bottom: -15%;
     right: -10%;
-
   }
 
-  .wrksize{
-    position: relative; 
-    margin:auto;
+  .wrksize {
+    position: relative;
+    margin: auto;
     left: 40%;
     min-width: 250px;
     /* width: 50%; */
@@ -78,14 +75,14 @@
     bottom: -30%;
   }
 
-  .horizontal_dotted_line{
+  .horizontal_dotted_line {
     border-bottom: 6px dotted black;
     width: 100%;
     position: relative;
     top: -20%;
-  } 
+  }
 
-  .title{
+  .title {
     font-weight: bold;
     font-size: 55px;
     margin: auto;
@@ -94,14 +91,14 @@
     left: 30%;
   }
 
-  .exr-desc > button{
+  .exr-desc > button {
     position: relative;
     top: -28%;
   }
 
-  .wrkbutton{
+  .wrkbutton {
     height: 200px;
-    width:  200px;
+    width: 200px;
     margin-left: 10mm;
     position: relative;
     right: -50%;
@@ -109,14 +106,10 @@
     /* top: -40%; */
   }
 
-  
-  
-
   .WorkoutElement:hover {
     transform: translateY(-10px) rotate(1deg);
     box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
   }
-
 
   .PlanElement {
     flex-shrink: 0;
@@ -130,12 +123,11 @@
     box-sizing: border-box;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
     border-radius: 30%;
-    font-family: 'Times New Roman', serif;
+    font-family: "Times New Roman", serif;
     font-size: 3rem;
   }
 
-
-  .middle{
+  .middle {
     position: relative;
     width: 300px;
     height: 100px;
@@ -143,7 +135,7 @@
     bottom: 50%;
   }
 
-  .right{
+  .right {
     position: relative;
     width: 300px;
     height: 100px;
@@ -151,7 +143,7 @@
     bottom: 50%;
   }
 
-  .muslcegroup{
+  .muslcegroup {
     font-family: monospace;
     border-top-left-radius: 37px 140px;
     border-top-right-radius: 23px 130px;
@@ -169,25 +161,24 @@
     transform: rotate(-1deg);
     box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
     transition: all 0.13s ease-in;
-    background-color: aqua;
+    background-color: rgb(29, 167, 167);
   }
-  
-  .muslcegroup > h3{
+
+  .muslcegroup > h3 {
     font-size: 120px;
     font-weight: bold;
   }
   .hide {
     display: none;
   }
-  
+
   .exercise:hover + .hide {
     display: block;
     color: red;
   }
 }
 @media screen and (max-width: 450px) {
-
-  .WorkoutCreation{
+  .WorkoutCreation {
     position: fixed; /* or absolute */
     top: 40%;
     left: 10%;
@@ -201,7 +192,7 @@
     background-color: beige;
     border-image: linear-gradient(45deg, turquoise, greenyellow) 1;
   }
-  
+
   /* .exercise-form{
     position: fixed;
     margin: auto;
@@ -215,8 +206,8 @@
     visibility: visible;
   } */
 
-  .WorkoutElement{
-    font-family: monospace; 
+  .WorkoutElement {
+    font-family: monospace;
     border-top-left-radius: 37px 140px;
     border-top-right-radius: 23px 130px;
     border-bottom-left-radius: 110px 19px;
@@ -224,7 +215,7 @@
     display: block;
     position: relative;
     border: solid 4px #6e7491;
-    padding: 40px 60px; 
+    padding: 40px 60px;
     /* max-width: 800px; */
     width: 100%;
     height: 80%;
@@ -235,14 +226,14 @@
     /* box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3); */
     /* transition: all 0.13s ease-in; */
   }
-  
+
   div.WorkoutElement > h3 {
     position: relative;
     margin: auto;
     left: 5%;
     font-size: 35px;
   }
-  
+
   /* .wrk-base{
     position: relative;
     left: 0%;
@@ -254,7 +245,7 @@
     position: relative;
   }
 
-  .title{
+  .title {
     font-weight: bold;
     font-size: 21px;
     position: relative;
@@ -262,33 +253,32 @@
     padding-bottom: 5px;
     padding-top: 5mm;
   }
-  .horizontal_dotted_line{
+  .horizontal_dotted_line {
     border-bottom: 4px dotted black;
     width: 90%;
     position: relative;
     top: -20%;
-  } 
+  }
 
-  .exr-desc > button{
+  .exr-desc > button {
     position: relative;
     top: -28%;
   }
-  .wrkbutton{
+  .wrkbutton {
     height: 40px;
-    width:  30 px;
+    width: 30 px;
     /* margin-left: 10mm; */
     position: relative;
     font-size: 14px;
     right: -30%;
     /* bottom: -20%; */
   }
-  
+
   /* .WorkoutElement:hover {
     transform: translateY(-10px) rotate(1deg);
     box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
   } */
-  
-  
+
   .PlanElement {
     flex-shrink: 0;
     position: relative;
@@ -297,33 +287,33 @@
     height: calc(250px + 6vw);
     width: calc(250px + 6vw);
     /* width: 95%; */
-    border: calc(5% + 1%vw) solid transparent;
+    border: calc(5% + 1vw) solid transparent;
     background-origin: border-box;
     background-clip: content-box, border-box;
     background-size: cover;
     box-sizing: border-box;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
     border-radius: 30%;
-    font-family: 'Times New Roman', serif;
+    font-family: "Times New Roman", serif;
     font-size: 3rem;
     margin-bottom: 1mm;
   }
-  
-  .plnbtn{
+
+  .plnbtn {
     margin-bottom: 5mm;
     position: relative;
     left: 5%;
   }
-  
-  .middle{
+
+  .middle {
     position: relative;
     width: 300px;
     height: 100px;
     /* left: -5%; */
     /* bottom: 50%; */
   }
-  
-  .right{
+
+  .right {
     position: relative;
     width: 300px;
     height: 100px;
@@ -331,13 +321,13 @@
     /* bottom: 50%; */
   }
 
-  .muslcegroup{
+  .muslcegroup {
     font-family: monospace;
     border-top-left-radius: 37px 140px;
     border-top-right-radius: 23px 130px;
     border-bottom-left-radius: 110px 19px;
     border-bottom-right-radius: 120px 24px;
-    background-color: #92D293;
+    background-color: #92d293;
     display: block;
     position: relative;
     border: solid 3px #6e7491;
@@ -351,15 +341,15 @@
     box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
     transition: all 0.13s ease-in;
   }
-  
-  .muslcegroup > h3{
+
+  .muslcegroup > h3 {
     font-size: 50px;
     font-weight: bold;
   }
   .hide {
     display: none;
   }
-  
+
   .exercise:hover + .hide {
     display: block;
     color: red;
@@ -367,5 +357,4 @@
   .exercise:not(hover) + .hide {
     display: none;
   }
-
 }

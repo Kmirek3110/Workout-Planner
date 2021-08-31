@@ -4,6 +4,10 @@ import {useCookies} from 'react-cookie';
 import APIService from '../APIService';
 import ExerciseForm from './ExerciseForm';
 
+/*
+    Element odpowiedzialny za wygląd oraz strukturę
+    jednostki trenignowej.
+*/
 function Workout(props) {
 
     const [exercise, SetExercise] = useState({exercise_name:"", reps:"", sets:""})

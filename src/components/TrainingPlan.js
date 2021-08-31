@@ -6,10 +6,11 @@ import {useCookies} from 'react-cookie';
 import WorkoutList from './WorkoutList';
 import WorkoutForm from './WorkoutForm';
 
-
+/*
+    W tym komponencie listujemy wszystkie
+    treningi danego planu. 
+*/
 function TrainingPlan() {
-
-    
 
     let {slug} = useParams();
     const [token] = useCookies(['mytoken'])

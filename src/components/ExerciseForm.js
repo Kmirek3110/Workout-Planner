@@ -7,7 +7,10 @@ import {useCookies} from 'react-cookie';
 
 
 
-
+/*
+    Formularz który musimy wypełnić podczas
+    dodawania ćwiczenia do jednostki treningowej.
+*/
 function ExerciseForm(props) {
     const [all_exercises, SetAllExercises] = useState([])
     const [exercises, setExercises] = useState({exercise_name:"",reps:"",sets:""})
@@ -44,9 +47,8 @@ function ExerciseForm(props) {
         }
 
     }
-    
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/exercise-list', {
+        fetch('https://training-plan-generator.herokuapp.com/api/exercises', {
         'method':'GET',
         headers: {
             'Content-Type':'application/json',
@@ -57,7 +59,7 @@ function ExerciseForm(props) {
     }, [])
 
    
-    
+    console.log(exercises, "exercisy")
     let all_names = all_exercises.map(function(item){
         return {value:item.exercise_name};
     })
@@ -65,7 +67,7 @@ function ExerciseForm(props) {
 
     const AddExercise = (e) => {    
             e.preventDefault()
-            console.log(errors.reps.length, errors.set.length, "testy wypluwania")  
+            console.log(errors.reps.length, errors.sets.length, "testy wypluwania")  
             if((errors.reps.length + errors.sets.length === 0) && exercises.exercise_name != ""){
             APIService.AddExercise(props.workout.id,exercises,token['mytoken'])
             .then(props.addEx(props.workout.id, exercises))    

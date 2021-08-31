@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import Exercise from './Exercise'
 
+
+/*
+  Komponent przekazuję listę ćwiczeń do
+  Exercise gdzie będą one sortowane.
+*/
 function ExerciseList(props) {
     
     const [exercises,SetExercises] = useState([])
@@ -21,17 +26,15 @@ function ExerciseList(props) {
         }        
         SetExercises(dict)
     }, [props.exercises])
-
-    console.log(exercises)
-
     return (
         <div>
              {exercises && Object.entries(exercises).map(group => {
-                 
-                return (
-                    <Exercise  group={group}/>
-                )
-                
+                  return (
+                    <div key={group[0]}>
+                      <Exercise  group={group}/>
+                      </div>
+                  )
+               
             })}
             
         </div>

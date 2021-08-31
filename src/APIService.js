@@ -1,10 +1,12 @@
+/*
+    Zbiór poleceń służacych do komunikacji z backendem.
+*/
 
 export default class APIService{
-
+    
     static GeneratePlan(body, token){
         // event.preventDefault()
-        console.log("token detail",token)
-        return fetch('http://127.0.0.1:8000/api/generate-plan',{
+        return fetch(`https://training-plan-generator.herokuapp.com/api/generate-plan`,{
             'method':'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -17,8 +19,7 @@ export default class APIService{
 
     static FinishPlan(plan_id, body, token){
         // event.preventDefault()
-        console.log("token detail",token)
-        return fetch(`http://127.0.0.1:8000/api/finished-plan/${plan_id}`,{
+        return fetch(`https://training-plan-generator.herokuapp.com/api/finished-plan/${plan_id}`,{
             'method':'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -31,8 +32,7 @@ export default class APIService{
 
     static PlanCreate(body, token){
         // event.preventDefault()
-        console.log("token detail",token)
-        return fetch('http://127.0.0.1:8000/api/plan-create',{
+        return fetch(`https://training-plan-generator.herokuapp.com/api/plan-create`,{
             'method':'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -43,8 +43,7 @@ export default class APIService{
     }
 
     static PlanDelete(token, plan_id){
-        console.log("token detail",token)
-        return fetch(`http://127.0.0.1:8000/api/plan-delete/${plan_id}`,{
+        return fetch(`https://training-plan-generator.herokuapp.com/api/plan-delete/${plan_id}`,{
             'method':'DELETE',
             headers: {
                 'Content-Type':'application/json',
@@ -54,8 +53,7 @@ export default class APIService{
     }
 
     static PlanDetail(plan_id, token){
-        console.log("token detail",token)
-        return fetch(`http://127.0.0.1:8000/api/plan-detail/${plan_id}`,{
+        return fetch(`https://training-plan-generator.herokuapp.com/api/plan-detail/${plan_id}`,{
             'method':'GET',
             headers: {
                 'Content-Type':'application/json',
@@ -66,7 +64,7 @@ export default class APIService{
 
     static PlanAddWorkout(plan_id, body, token){
         console.log("Asdasd",body)
-        return fetch(`http://127.0.0.1:8000/api/plan-add-workout/${plan_id}`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/plan-add-workout/${plan_id}`, {
             'method':'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -81,7 +79,7 @@ export default class APIService{
 
     static WorkoutList(token){
         console.log("Kreacja", token)
-        return fetch(`http://127.0.0.1:8000/api/workout-list`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-list`, {
             'method':'GET',
             headers: {
                 'Content-Type':'application/json',
@@ -92,7 +90,7 @@ export default class APIService{
     
     static CreateWorkout(body, token){
         console.log("Kreacja", token)
-        return fetch(`http://127.0.0.1:8000/api/workout-create`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-create`, {
             'method':'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -106,7 +104,7 @@ export default class APIService{
     static UpdateWorkout(workout_id, body, exercises, token){
         console.log("Updatowanie",workout_id, body)
         console.log("Przy updatowaniu exercises",exercises)
-        return fetch(`http://127.0.0.1:8000/api/workout-update/${workout_id}/`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-update/${workout_id}/`, {
             'method':'PUT',
             headers: {
                 'Content-Type':'application/json',
@@ -121,7 +119,7 @@ export default class APIService{
     static AddExercise(workout_id, body, token){
         console.log("Przy dodawaniu exercises",body)
         
-        return fetch(`http://127.0.0.1:8000/api/workout-add-exercise/${workout_id}`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-add-exercise/${workout_id}`, {
             'method':'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -135,7 +133,7 @@ export default class APIService{
 
     static UpdateExercise(workout_id, body, token){
         console.log("Przy udpotowaniu exercises",body)
-        return fetch(`http://127.0.0.1:8000/api/workout-update-exercise/${workout_id}`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-update-exercise/${workout_id}`, {
             'method':'PUT',
             headers: {
                 'Content-Type':'application/json',
@@ -149,7 +147,7 @@ export default class APIService{
 
     static DeleteExercise(workout_id, body, token){
         console.log("Przy usuwaniu exercises",body)
-        return fetch(`http://127.0.0.1:8000/api/workout-delete-exercise/${workout_id}`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-delete-exercise/${workout_id}`, {
             'method':'DELETE',
             headers: {
                 'Content-Type':'application/json',
@@ -163,7 +161,7 @@ export default class APIService{
 
     static DeleteWorkout(workout_id, token){
         console.log("Usuwanie",workout_id)
-        return fetch(`http://127.0.0.1:8000/api/workout-delete/${workout_id}/`, {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/workout-delete/${workout_id}/`, {
             'method':'DELETE',
             headers: {
                 'Content-Type':'application/json',
@@ -173,11 +171,10 @@ export default class APIService{
     }
     static LoginUser(body) {
 
-        return fetch('http://127.0.0.1:8000/auth/', {
+        return fetch(`https://training-plan-generator.herokuapp.com/auth/`, {
           'method':'POST',
           headers: {
-              'Content-Type':'application/json',
-              
+              'Content-Type':'application/json'
             }, 
             body:JSON.stringify(body)
   
@@ -188,7 +185,7 @@ export default class APIService{
   
       static RegisterUser(body) {
   
-        return fetch('http://127.0.0.1:8000/api/users', {
+        return fetch(`https://training-plan-generator.herokuapp.com/api/users`, {
           'method':'POST',
           headers: {
               'Content-Type':'application/json',

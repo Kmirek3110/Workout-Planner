@@ -55,6 +55,7 @@ def token_autorization(data):
 
 @api_view(["GET"])
 def exerciseList(request):
+    
     # list = listexercises()
     # for row in list:
     #         _, created = Exercise.objects.get_or_create(
@@ -345,7 +346,7 @@ def planGenerate(request):
         user.plan.add(p) 
 
     serializer = PlanSerializer(p,many=False)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data)
 
 
