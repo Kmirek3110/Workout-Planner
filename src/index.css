@@ -8,7 +8,7 @@
 
 @media screen and (min-width: 450px) {
   .WorkoutCreation {
-    position: absolute; /* or absolute */
+    position: absolute;
     top: 30%;
     left: 45%;
     border: 5px solid blue;
@@ -37,9 +37,6 @@
     margin: 100px auto 0;
     font-size: 40px;
     line-height: 50px;
-    /* transform: rotate(-1deg);
-    box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
-    transition: all 0.13s ease-in; */
   }
 
   div.WorkoutElement > h3 {
@@ -161,7 +158,7 @@
     transform: rotate(-1deg);
     box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
     transition: all 0.13s ease-in;
-    background-color: rgb(29, 167, 167);
+    background-color: aqua;
   }
 
   .muslcegroup > h3 {

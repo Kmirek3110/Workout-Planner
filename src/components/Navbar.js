@@ -1,13 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, Navbar } from 'react-bootstrap';
-import styled from 'styled-components';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Nav, Navbar } from "react-bootstrap";
+import styled from "styled-components";
 
 const Styles = styled.div`
   .navbar {
-    background-color: #F0F8FF;
+    background-color: #222;
   }
-  a, .navbar-brand, .navbar-nav .nav-link {
+  a,
+  .navbar-brand,
+  .navbar-nav .nav-link {
     color: #bbb;
     &:hover {
       color: white;
@@ -21,7 +23,7 @@ const Styles = styled.div`
 export const NavigationBar = () => (
   <Styles>
     <Navbar expand="lg">
-      <Navbar.Brand > Create your ideal training Plan</Navbar.Brand>
+      <Navbar.Brand> Create your ideal training Plan</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
@@ -31,7 +33,7 @@ export const NavigationBar = () => (
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link as={Link} to="/plans" >
+            <Nav.Link as={Link} to="/plans">
               Training Plans
             </Nav.Link>
           </Nav.Item>
@@ -58,5 +60,5 @@ export const NavigationBar = () => (
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  </Styles >
-)
+  </Styles>
+);

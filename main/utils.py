@@ -1,5 +1,3 @@
-
-
 from .models import Exercise
 import random
 import math

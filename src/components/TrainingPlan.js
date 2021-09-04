@@ -1,56 +1,56 @@
-import React from 'react'
-import APIService from '../APIService';
-import {useState, useEffect} from 'react'
+import React from "react";
+import APIService from "../APIService";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {useCookies} from 'react-cookie';
-import WorkoutList from './WorkoutList';
-import WorkoutForm from './WorkoutForm';
+import { useCookies } from "react-cookie";
+import WorkoutList from "./WorkoutList";
+import WorkoutForm from "./WorkoutForm";
 
 /*
     W tym komponencie listujemy wszystkie
     treningi danego planu. 
 */
 function TrainingPlan() {
+  let { slug } = useParams();
+  const [token] = useCookies(["mytoken"]);
+  const [plan, setPlan] = useState("");
+  const [workout, SetWorkouts] = useState("");
+  const [clicked, setClicked] = useState(false);
 
-    let {slug} = useParams();
-    const [token] = useCookies(['mytoken'])
-    const [plan, setPlan] = useState("")
-    const [workout, SetWorkouts] = useState("")
-    const [clicked, setClicked] = useState(false);
+  const buttonHandler = () => {
+    setClicked((current) => !current);
+  };
 
+  useEffect(() => {
+    APIService.PlanDetail(slug, token["mytoken"])
+      .then((resp) => setPlan(resp))
+      .then(plan && SetWorkouts(plan[0].workouts))
+      .catch((error) => console.log(error));
+  }, []);
 
-    const buttonHandler = () => {
-        setClicked(current => !current)
-    }
+  return (
+    <div>
+      <br />
+      <button
+        type="button"
+        className="btn btn-success wrksize"
+        style={{ height: "60px", width: "300px" }}
+        onClick={buttonHandler}
+      >
+        Create new Workout
+      </button>
 
+      <br />
+      <br />
 
-    useEffect(() => {
-        APIService.PlanDetail(slug,token['mytoken'])
-        .then(resp => setPlan(resp))
-        .then(plan && SetWorkouts(plan[0].workouts))
-        .catch(error => console.log(error))
-    },[])
-
-    return (
-        <div>
-            <br/>
-            <button type="button" className="btn btn-success wrksize" style = {{height:"60px",width: "300px"}}onClick={buttonHandler} >
-                 Create new Workout
-            </button>
-            
-            <br/>
-            <br/>
-
-            {plan && <WorkoutList workouts={plan[0].workouts} target={plan[0].target}/>}
-            {clicked ? <WorkoutForm plan_id={plan[0].id}/>:<div></div>}
-
-        </div>
-    )
+      {plan && (
+        <WorkoutList workouts={plan[0].workouts} target={plan[0].target} />
+      )}
+      {clicked ? <WorkoutForm plan_id={plan[0].id} /> : <div></div>}
+    </div>
+  );
 }
 
-TrainingPlan.propTypes = {
+TrainingPlan.propTypes = {};
 
-}
-
-export default TrainingPlan
-
+export default TrainingPlan;
